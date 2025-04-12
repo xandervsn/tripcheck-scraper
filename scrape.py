@@ -75,21 +75,21 @@ for i in range(1):
     def on_press(key):
         global current_index
         try:
-            if key == keyboard.Key.right:  # Move to positive
+            if key == keyboard.Key.right:
                 shutil.move(os.path.join(imgs_dir, images[current_index]), positive_dir)
                 print(f"Moved to positive: {images[current_index]}")
                 current_index += 1
-            elif key == keyboard.Key.left:  # Move to negative
+            elif key == keyboard.Key.left: 
                 shutil.move(os.path.join(imgs_dir, images[current_index]), negative_dir)
                 print(f"Moved to negative: {images[current_index]}")
                 current_index += 1
-            elif key == keyboard.Key.up:  # Delete image
+            elif key == keyboard.Key.up: 
                 os.remove(os.path.join(imgs_dir, images[current_index]))
                 print(f"Deleted: {images[current_index]}")
                 current_index += 1
             if current_index >= len(images):
                 print("No more images.")
-                return False  # Stop listener
+                return False 
             display_image()
         except Exception as e:
             print(f"Error: {e}")
@@ -97,7 +97,7 @@ for i in range(1):
     def display_image():
         console = Console()
         img_path = os.path.join(imgs_dir, images[current_index])
-        pixels = Pixels.from_image_path(img_path)  # Increase resolution for better quality
+        pixels = Pixels.from_image_path(img_path) 
         console.print(pixels)
 
 
