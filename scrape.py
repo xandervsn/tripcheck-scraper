@@ -9,57 +9,57 @@ from pynput import keyboard
 from rich_pixels import Pixels
 from rich.console import Console
 
-# for i in range(259, 1000):
-#     time.sleep(2)
-#     try:
-#         url = f"https://api.odot.state.or.us/tripcheck/Cctv/Inventory?DeviceId={i}"
+for i in range(259, 1000):
+    time.sleep(2)
+    try:
+        url = f"https://api.odot.state.or.us/tripcheck/Cctv/Inventory?DeviceId={i}"
 
-#         hdr ={
-#         # Request headers
-#         'Cache-Control': 'no-cache',
-#         'Ocp-Apim-Subscription-Key': secret.getKey(),
-#         }
+        hdr ={
+        # Request headers
+        'Cache-Control': 'no-cache',
+        'Ocp-Apim-Subscription-Key': secret.getKey(),
+        }
 
-#         req = urllib.request.Request(url, headers=hdr)
+        req = urllib.request.Request(url, headers=hdr)
 
-#         req.get_method = lambda: 'GET'
-#         response = urllib.request.urlopen(req)
-#         r_code = response.getcode()
-#         r_text = json.loads(response.read().decode('utf-8'))
-#         if r_code == 200:
-#             file = open("valid_ids.txt", "a")
-#             file.write(f"{r_text['CCTVInventoryRequest'][0]['device-id']},")
-#             file.close()
-#     except Exception as e:
-#         print(f"Error: {e}, {i}")
+        req.get_method = lambda: 'GET'
+        response = urllib.request.urlopen(req)
+        r_code = response.getcode()
+        r_text = json.loads(response.read().decode('utf-8'))
+        if r_code == 200:
+            file = open("valid_ids.txt", "a")
+            file.write(f"{r_text['CCTVInventoryRequest'][0]['device-id']},")
+            file.close()
+    except Exception as e:
+        print(f"Error: {e}, {i}")
 
-# n = 0
-# while True:
-#     for i in secret.get_valid_ids():
-#         time.sleep(2)
-#         try:
-#             url = f"https://api.odot.state.or.us/tripcheck/Cctv/Inventory?DeviceId={i}"
-#             hdr = {
-#                 # Request headers
-#                 'Cache-Control': 'no-cache',
-#                 'Ocp-Apim-Subscription-Key': secret.get_key(),
-#             }
-#             req = urllib.request.Request(url, headers=hdr)
-#             req.get_method = lambda: 'GET'
-#             response = urllib.request.urlopen(req)
-#             r_code = response.getcode()
-#             r_text = json.loads(response.read().decode('utf-8'))
-#             url = r_text['CCTVInventoryRequest'][0]['cctv-url'].replace(' ', '%20')
-#             image_response = urllib.request.urlopen(url)
-#             image_data = image_response.read()
-#             image = Image.open(BytesIO(image_data))
-#             width, height = image.size
-#             cropped_image = image.crop((5, 40, width - 5, height - 50))
-#             cropped_image.save(f"./imgs/device_{i}_{n}.jpg", "JPEG")
-#             n += 1
-#             print(f"Saved image for device {i}: {n}")
-#         except Exception as e:
-#             print(f"Error: {e}, {i}")
+n = 0
+while True:
+    for i in secret.get_valid_ids():
+        time.sleep(2)
+        try:
+            url = f"https://api.odot.state.or.us/tripcheck/Cctv/Inventory?DeviceId={i}"
+            hdr = {
+                # Request headers
+                'Cache-Control': 'no-cache',
+                'Ocp-Apim-Subscription-Key': secret.get_key(),
+            }
+            req = urllib.request.Request(url, headers=hdr)
+            req.get_method = lambda: 'GET'
+            response = urllib.request.urlopen(req)
+            r_code = response.getcode()
+            r_text = json.loads(response.read().decode('utf-8'))
+            url = r_text['CCTVInventoryRequest'][0]['cctv-url'].replace(' ', '%20')
+            image_response = urllib.request.urlopen(url)
+            image_data = image_response.read()
+            image = Image.open(BytesIO(image_data))
+            width, height = image.size
+            cropped_image = image.crop((5, 40, width - 5, height - 50))
+            cropped_image.save(f"./imgs/device_{i}_{n}.jpg", "JPEG")
+            n += 1
+            print(f"Saved image for device {i}: {n}")
+        except Exception as e:
+            print(f"Error: {e}, {i}")
 
 for i in range(1):
     imgs_dir = "./imgs/"
